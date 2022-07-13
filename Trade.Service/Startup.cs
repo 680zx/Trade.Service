@@ -11,19 +11,16 @@ namespace Trade.Service
     {
         private ILogger<Startup> _logger;
 
-        private AlgorithmManager _algorithmManager;
-
         public Startup(ILogger<Startup> logger)
         {
             _logger = logger;
         }
 
-        public void Run()
+        public void Configure()
         {
             try
             {
-                _algorithmManager = new AlgorithmManager(true);
-                _algorithmManager.Run()
+               
             }
             catch (Exception ex)
             {
