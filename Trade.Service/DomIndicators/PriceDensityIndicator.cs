@@ -1,10 +1,11 @@
 ﻿using Contracts;
 using Entities;
 
-namespace Trade.Service.DomAlgorithms
+namespace Trade.Service.DomIndicators
 {
-    internal class PriceDensityAlgorithm : IDomAlgorithm
+    internal class PriceDensityIndicator : IDomIndicator
     {
+        // Dom -> Depth of Market | стакан заявок
         public decimal DomAccuracy { get; set; }
 
         public MarketMovement GetValue(DepthOfMarket data)
@@ -20,7 +21,7 @@ namespace Trade.Service.DomAlgorithms
                 bestSellRoundedCoinPrice = Math.Round(data.BestSellPrice, (int) Math.Abs(domAccuracyDegree));
             }
 
-            // round integer path of number
+            // round integer part of number
             if (domAccuracyDegree >= 0)
             {
                 var divisorPrecision = (decimal) Math.Pow(10, domAccuracyDegree);
