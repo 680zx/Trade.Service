@@ -3,8 +3,10 @@ using Entities;
 
 namespace Trade.Service.CandlestickPatterns
 {
-    internal class Hammer : ICandlestickPattern
+    public class Hammer : ICandlestickPattern
     {
+        ILogger<Hammer> _logger;
+
         // What percentage is the candlestick body of the
         // larger shadow (upper/lower never mind).
         public decimal MaxBodyLengthPercentage { get; set; }
@@ -12,40 +14,43 @@ namespace Trade.Service.CandlestickPatterns
         public decimal MinBodyLengthPercentage { get; set; }
         public decimal MaxUpperShadowLengthPercentage { get; set; }
         public decimal MaxLowerShadowLengthPercentage { get; set; }
+        public int WindowLength { get; set; }
 
-        // The idea behind the Hammer pattern here
-        // is to provide 5 candles where the first
-        // 3 candlesticks is in front of the Hammer
-        // and the last candlestick staying after the 
-        // potential Hammer in the array should confirm
-        // the pattern.
-        // Nonetheless it can be setup by your own.
-        public int WindowLength { get; set; } = 5;
+
+        public Hammer(ILogger<Hammer> logger)
+        {
+            _logger = logger;
+        }
 
         public MarketMovement GetValue(IList<DataBar> data)
         {
-            if (data == null)
-                throw new ArgumentNullException("Passed data equals null");
+            var result = MarketMovement.Undefined;
 
-            if (data.Count < WindowLength)
-                throw new ArgumentNullException($"Passed data count is less then {nameof(WindowLength)}");
+            try
+            {
+                if (data == null)
+                    throw new ArgumentNullException("Passed data equals null");
+           
+                result = HasPattern(data.Last()) ? MarketMovement.Up : MarketMovement.Undefined;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex.StackTrace);
+            }
 
-            var value = MarketMovement.Undefined;
-            
-
-            return value;
+            return result;
         }
 
-        private bool HasPattern(IList<DataBar> data)
+        private bool HasPattern(DataBar data)
         {
-            var lastDataBarIndex = data.Count;
 
-            // The potential hammer is in front
-            // of the last candlestick in the array.
-            var potentialHammerIndex = lastDataBarIndex - 1;
+            var hammerBodyToTotalLengthRatio = data.RealBody / data.TotalLength * 100;
+            var hammerUpperShadowLengthToTotalLengthRatio = data.UpperShadow / data.TotalLength * 100;
+            var hammerLowerShadowLengthToTotalLengthRatio = data.LowerShadow / data.TotalLength * 100;
 
-            if (data[potentialHammerIndex].RealBody / data[potentialHammerIndex].TotalLength < MaxBodyLengthPercentage &&
-                )
+            if (hammerBodyToTotalLengthRatio < MaxBodyLengthPercentage &&
+                hammerUpperShadowLengthToTotalLengthRatio < MaxUpperShadowLengthPercentage &&
+                hammerLowerShadowLengthToTotalLengthRatio < MaxLowerShadowLengthPercentage)
                 return true;
 
             return false;
