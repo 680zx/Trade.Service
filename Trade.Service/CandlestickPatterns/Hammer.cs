@@ -43,14 +43,13 @@ namespace Trade.Service.CandlestickPatterns
 
         private bool HasPattern(DataBar data)
         {
-
             var hammerBodyToTotalLengthRatio = data.RealBody / data.TotalLength * 100;
-            var hammerUpperShadowLengthToTotalLengthRatio = data.UpperShadow / data.TotalLength * 100;
-            var hammerLowerShadowLengthToTotalLengthRatio = data.LowerShadow / data.TotalLength * 100;
+            var hammerUpperShadowToTotalLengthRatio = data.UpperShadow / data.TotalLength * 100;
+            var hammerLowerShadowToTotalLengthRatio = data.LowerShadow / data.TotalLength * 100;
 
             if (hammerBodyToTotalLengthRatio < MaxBodyLengthPercentage &&
-                hammerUpperShadowLengthToTotalLengthRatio < MaxUpperShadowLengthPercentage &&
-                hammerLowerShadowLengthToTotalLengthRatio < MaxLowerShadowLengthPercentage)
+                hammerUpperShadowToTotalLengthRatio < MaxUpperShadowLengthPercentage &&
+                hammerLowerShadowToTotalLengthRatio < MaxLowerShadowLengthPercentage)
                 return true;
 
             return false;

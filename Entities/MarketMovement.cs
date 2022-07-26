@@ -2,8 +2,8 @@
 {
     public enum MarketMovement
     {
-        Up,
-        Down,
-        Undefined
+        Undefined = 0,
+        Up = 1,
+        Down = -1
     }
 }
