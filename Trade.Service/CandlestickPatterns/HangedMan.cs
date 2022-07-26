@@ -5,7 +5,7 @@ namespace Trade.Service.CandlestickPatterns
 {
     internal class HangedMan : ICandlestickPattern
     {
-        ILogger<HangedMan> _logger;
+        private readonly ILogger<HangedMan> _logger;
 
         // What percentage is the candlestick body of the
         // larger shadow (upper/lower never mind).

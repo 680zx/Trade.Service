@@ -5,7 +5,7 @@ namespace Trade.Service.CandlestickPatterns
 {
     internal class ShootingStar : ICandlestickPattern
     {
-        ILogger<ShootingStar> _logger;
+        private readonly ILogger<ShootingStar> _logger;
 
         // What percentage is the candlestick body of the
         // larger shadow (upper/lower never mind).

@@ -5,7 +5,7 @@ namespace Trade.Service.CandlestickPatterns
 {
     public class Hammer : ICandlestickPattern
     {
-        ILogger<Hammer> _logger;
+        private readonly ILogger<Hammer> _logger;
 
         // What percentage is the candlestick body of the
         // larger shadow (upper/lower never mind).

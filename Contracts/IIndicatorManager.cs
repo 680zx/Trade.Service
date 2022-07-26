@@ -1,6 +1,6 @@
 ﻿namespace Contracts
 {
-    public interface IIndicator<T, K>
+    public interface IIndicatorManager<T, K>
     {
         public T GetValue(K value);
     }

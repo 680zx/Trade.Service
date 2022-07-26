@@ -10,5 +10,7 @@
         public decimal LowerShadow { get; set; }
         public decimal RealBody { get => Math.Abs(ClosePrice - OpenPrice); }
         public decimal TotalLength { get => HighPrice - LowPrice; }
+
+        public decimal EmaValue { get; set; }
     }
 }
