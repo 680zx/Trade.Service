@@ -45,7 +45,6 @@ namespace Trade.Service.CandlestickPatterns
         {
             // The last element in the list before Hanged
             // Man is used to validate the pattern.
-
             var validatingElement = data.Count;
             var hangedMan = validatingElement - 1;
 
