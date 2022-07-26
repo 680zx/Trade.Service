@@ -13,7 +13,9 @@ namespace Trade.Service.CandlestickPatterns
 
         public decimal MinBodyLengthPercentage { get; set; }
         public decimal MaxUpperShadowLengthPercentage { get; set; }
+        public decimal MinUpperShadowLengthPercentage { get; set; }
         public decimal MaxLowerShadowLengthPercentage { get; set; }
+        public decimal MinLowerShadowLengthPercentage { get; set; }
         public int WindowLength { get; set; }
 
         public HangedMan(ILogger<HangedMan> logger)
@@ -47,14 +49,14 @@ namespace Trade.Service.CandlestickPatterns
             var validatingElement = data.Count;
             var hangedMan = validatingElement - 1;
 
-            var hangedManBodyToTotalLengthRatio = data[hangedMan].RealBody / data[hangedMan].TotalLength * 100;
-            var hangedManUpperShadowToTotalLengthRatio = data[hangedMan].UpperShadow / data[hangedMan].TotalLength * 100;
-            var hangedManLowerShadowToTotalLengthRatio = data[hangedMan].LowerShadow / data[hangedMan].TotalLength * 100;
+            var hangedManBodyToTotalLengthRatioPercentage = data[hangedMan].RealBody / data[hangedMan].TotalLength * 100;
+            var hangedManUpperShadowToTotalLengthRatioPercentage = data[hangedMan].UpperShadow / data[hangedMan].TotalLength * 100;
+            var hangedManLowerShadowToTotalLengthRatioPercentage = data[hangedMan].LowerShadow / data[hangedMan].TotalLength * 100;
 
-            if (hangedManBodyToTotalLengthRatio < MaxBodyLengthPercentage &&
-                hangedManUpperShadowToTotalLengthRatio < MaxUpperShadowLengthPercentage &&
-                hangedManLowerShadowToTotalLengthRatio < MaxLowerShadowLengthPercentage &&
-                data[validatingElement].ClosePrice < data[hangedMan].ClosePrice)
+            if (hangedManBodyToTotalLengthRatioPercentage <= MaxBodyLengthPercentage &&
+                hangedManUpperShadowToTotalLengthRatioPercentage <= MaxUpperShadowLengthPercentage &&
+                hangedManLowerShadowToTotalLengthRatioPercentage >= MinLowerShadowLengthPercentage &&
+                data[validatingElement].ClosePrice < data[hangedMan].ClosePrice)    // validate the pattern using next candlestick after hanged man.
                 return true;
 
             return false;

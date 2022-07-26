@@ -13,7 +13,9 @@ namespace Trade.Service.CandlestickPatterns
 
         public decimal MinBodyLengthPercentage { get; set; }
         public decimal MaxUpperShadowLengthPercentage { get; set; }
+        public decimal MinUpperShadowLengthPercentage { get; set; }
         public decimal MaxLowerShadowLengthPercentage { get; set; }
+        public decimal MinLowerShadowLengthPercentage { get; set; }
         public int WindowLength { get; set; }
 
         public ShootingStar(ILogger<ShootingStar> logger)
@@ -42,13 +44,13 @@ namespace Trade.Service.CandlestickPatterns
 
         private bool HasPattern(DataBar data)
         {
-            var shootingStarBodyToTotalLengthRatio = data.RealBody / data.TotalLength * 100;
-            var shootingStarUpperShadowToTotalLengthRatio = data.UpperShadow / data.TotalLength * 100;
-            var shootingStarLowerShadowToTotalLengthRatio = data.LowerShadow / data.TotalLength * 100;
+            var shootingStarBodyToTotalLengthRatioPercentage = data.RealBody / data.TotalLength * 100;
+            var shootingStarUpperShadowToTotalLengthRatioPercentage = data.UpperShadow / data.TotalLength * 100;
+            var shootingStarLowerShadowToTotalLengthRatioPercentage = data.LowerShadow / data.TotalLength * 100;
 
-            if (shootingStarBodyToTotalLengthRatio < MaxBodyLengthPercentage &&
-                shootingStarUpperShadowToTotalLengthRatio < MaxUpperShadowLengthPercentage &&
-                shootingStarLowerShadowToTotalLengthRatio < MaxLowerShadowLengthPercentage)
+            if (shootingStarBodyToTotalLengthRatioPercentage <= MaxBodyLengthPercentage &&
+                shootingStarUpperShadowToTotalLengthRatioPercentage >= MaxUpperShadowLengthPercentage &&
+                shootingStarLowerShadowToTotalLengthRatioPercentage <= MinLowerShadowLengthPercentage)
                 return true;
 
             return false;

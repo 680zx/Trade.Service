@@ -13,7 +13,9 @@ namespace Trade.Service.CandlestickPatterns
         
         public decimal MinBodyLengthPercentage { get; set; }
         public decimal MaxUpperShadowLengthPercentage { get; set; }
+        public decimal MinUpperShadowLengthPercentage { get; set; }
         public decimal MaxLowerShadowLengthPercentage { get; set; }
+        public decimal MinLowerShadowLengthPercentage { get; set; }
         public int WindowLength { get; set; }
 
         public Hammer(ILogger<Hammer> logger)
@@ -42,13 +44,13 @@ namespace Trade.Service.CandlestickPatterns
 
         private bool HasPattern(DataBar data)
         {
-            var hammerBodyToTotalLengthRatio = data.RealBody / data.TotalLength * 100;
-            var hammerUpperShadowToTotalLengthRatio = data.UpperShadow / data.TotalLength * 100;
-            var hammerLowerShadowToTotalLengthRatio = data.LowerShadow / data.TotalLength * 100;
+            var hammerBodyToTotalLengthRatioPercentage = data.RealBody / data.TotalLength * 100;
+            var hammerUpperShadowToTotalLengthRatioPercentage = data.UpperShadow / data.TotalLength * 100;
+            var hammerLowerShadowToTotalLengthRatioPercentage = data.LowerShadow / data.TotalLength * 100;
 
-            if (hammerBodyToTotalLengthRatio < MaxBodyLengthPercentage &&
-                hammerUpperShadowToTotalLengthRatio < MaxUpperShadowLengthPercentage &&
-                hammerLowerShadowToTotalLengthRatio < MaxLowerShadowLengthPercentage)
+            if (hammerBodyToTotalLengthRatioPercentage <= MaxBodyLengthPercentage &&
+                hammerUpperShadowToTotalLengthRatioPercentage <= MaxUpperShadowLengthPercentage &&
+                hammerLowerShadowToTotalLengthRatioPercentage >= MinLowerShadowLengthPercentage)
                 return true;
 
             return false;
