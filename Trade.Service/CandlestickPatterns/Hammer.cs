@@ -16,7 +16,6 @@ namespace Trade.Service.CandlestickPatterns
         public decimal MaxLowerShadowLengthPercentage { get; set; }
         public int WindowLength { get; set; }
 
-
         public Hammer(ILogger<Hammer> logger)
         {
             _logger = logger;
