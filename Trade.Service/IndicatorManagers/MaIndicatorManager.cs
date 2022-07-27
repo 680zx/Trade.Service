@@ -38,28 +38,36 @@ namespace Trade.Service.IndicatorManagers
 
                 var dataLength = shortPeriodMaData.Count;
 
-                // Check market movement is down
+                // Check the market move down
                 for (int i = 0; i < dataLength; i++)
                 {
                     if (shortPeriodMaData[i].EmaValue < longPeriodMaData[i].EmaValue && i != dataLength)
                         result = MarketMovement.Down;
                     else
+                    {
                         result = MarketMovement.Undefined;
+                        break;
+                    }
                 }
 
-                // Check market movement is up
+                // Check the market move up
                 for (int i = 0; i < dataLength; i++)
                 {
                     if (longPeriodMaData[i].EmaValue < longPeriodMaData[i].EmaValue && i != dataLength)
                         result = MarketMovement.Up;
                     else
+                    {
                         result = MarketMovement.Undefined;
+                        break;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex.StackTrace);
             }
+
+            _logger.LogInformation($"{nameof(MaIndicatorManager)}:\tMarket trend is {result}");
 
             return result;
         }

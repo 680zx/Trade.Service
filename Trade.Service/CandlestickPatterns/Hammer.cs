@@ -39,6 +39,8 @@ namespace Trade.Service.CandlestickPatterns
                 _logger.LogError(ex.Message, ex.StackTrace);
             }
 
+            _logger.LogInformation($"{nameof(Hammer)}:\tMarket movement is {result}");
+
             return result;
         }
 
