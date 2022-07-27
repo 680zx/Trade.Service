@@ -3,18 +3,29 @@ using Entities;
 
 namespace Trade.Service.TrendIndicators
 {
-    internal class MaIndicator : ITrendIndicator
+    internal class MaIndicator : ITrendIndicator<IList<DataBar>>
     {
+        private int _period;
         private decimal _alphaRate;
         private readonly  ILogger _logger;
 
+        public int WindowLength { get; set; }
+        public int Period 
+        { 
+            get => _period;
+            set
+            {
+                if (value < 1)
+                    throw new ArgumentOutOfRangeException("Period must be greater than 1", nameof(Period));
+                _period = value;
+            }
+        }
+
         public MaIndicator(ILogger logger, int period)
         {
-            if (period < 1)
-                throw new ArgumentOutOfRangeException("Period must be greater than 1", nameof(period));
-
+            Period = period;
             _logger = logger;
-            _alphaRate = 2 / (period + 1);
+            _alphaRate = 2 / (_period + 1);
         }
 
         public IList<DataBar> GetValue(IList<DataBar> data)

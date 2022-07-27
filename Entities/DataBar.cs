@@ -12,5 +12,6 @@
         public decimal TotalLength { get => HighPrice - LowPrice; }
 
         public decimal EmaValue { get; set; }
+        public Color Color { get => ClosePrice - OpenPrice > 0 ? Color.Green : Color.Red; }
     }
 }

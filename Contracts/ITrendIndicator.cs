@@ -2,7 +2,8 @@
 
 namespace Contracts
 {
-    public interface ITrendIndicator : IIndicator<IList<DataBar>, IList<DataBar>>
+    public interface ITrendIndicator<T> : IIndicator<T, IList<DataBar>>
     {
+        public int WindowLength { get; set; }
     }
 }
