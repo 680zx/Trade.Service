@@ -2,8 +2,8 @@
 
 namespace Contracts
 {
-    public interface IAlgorithm
+    public interface IAlgorithm<T>
     {
-        public MarketMovement GetMarketMovement();
+        public MarketMovement GetMarketMovement(T data);
     }
 }
