@@ -22,7 +22,7 @@ namespace Trade.Service.TrendIndicators
             {
                 var processData = value.TakeLast(WindowLength).ToList();
                 var greenDataBarCount = 0;
-                decimal greenDataBarTotalLength = 0;
+                var greenDataBarTotalLength = 0m;
 
                 var redDataBarCount = 0;
                 decimal redDataBarTotalLength = 0;
