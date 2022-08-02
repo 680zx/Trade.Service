@@ -1,8 +1,8 @@
 ﻿using Contracts;
 
-namespace Trade.Service.Settings
+namespace Trade.Service.Settings.CandlestickPatternSettings
 {
-    internal class CandlestickPatternSettings : ICandlestickPatternSettings
+    internal abstract class BaseCandlestickPatternSettings : ICandlestickPatternSettings
     {
         public decimal MaxBodyLengthPercentage { get; set; }
         public decimal MinBodyLengthPercentage { get; set; }
@@ -11,9 +11,9 @@ namespace Trade.Service.Settings
         public decimal MaxLowerShadowLengthPercentage { get; set; }
         public decimal MinLowerShadowLengthPercentage { get; set; }
 
-        public CandlestickPatternSettings(IConfiguration configuration, string jsonCandlestickPatternName)
+        public BaseCandlestickPatternSettings(IConfiguration configuration, string candlestickPatternName)
         {
-            configuration.GetSection(jsonCandlestickPatternName).Bind(this);
+            configuration.GetSection(candlestickPatternName).Bind(this);
         }
     }
 }
